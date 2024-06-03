@@ -138,18 +138,21 @@ public:
 
     double Evaluate(const std::function<double(Position)>& args) const override {
         double result = 0.0;
+        double lhs_evaluate = lhs_->Evaluate(args);
+        double rhs_evaluate = rhs_->Evaluate(args);
+
         switch (type_) {
             case Add:
-                result = lhs_->Evaluate(args) + rhs_->Evaluate(args);
+                result = lhs_evaluate + rhs_evaluate;
                 break;
             case Subtract:
-                result = lhs_->Evaluate(args) - rhs_->Evaluate(args);
+                result = lhs_evaluate - rhs_evaluate;
                 break;
             case Multiply:
-                result = lhs_->Evaluate(args) * rhs_->Evaluate(args);
+                result = lhs_evaluate * rhs_evaluate;
                 break;
             case Divide:
-                result = lhs_->Evaluate(args) / rhs_->Evaluate(args);
+                result = lhs_evaluate / rhs_evaluate;
                 break;
         }
 
@@ -196,10 +199,12 @@ public:
 
     double Evaluate(const std::function<double(Position)>& args) const override {
         double result = 0.0;
+        double operand_evaluate = operand_->Evaluate(args);
+
         if (type_ == UnaryMinus) {
-            result = operand_->Evaluate(args) * -1;
+            result = operand_evaluate * -1;
         } else {
-            result = operand_->Evaluate(args);
+            result = operand_evaluate;
         }
 
         if(!std::isfinite(result)) {
