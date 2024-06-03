@@ -371,26 +371,6 @@ int main() {
     RUN_TEST(tr, TestFormulaIncorrect);
     RUN_TEST(tr, TestCellCircularReferences); //
 
-    /*auto sheet = CreateSheet();
-
-    sheet->SetCell("C1"_pos, "Me gusta");
-    sheet->SetCell("C2"_pos, " penis)))");
-    sheet->SetCell("C3"_pos, "=9+C4");
-    sheet->SetCell("C4"_pos, "16");
-    sheet->SetCell("C5"_pos, "25");
-    sheet->SetCell("C6"_pos, "=C1+C2");
-    sheet->SetCell("C7"_pos, "=C3+2*2");
-    sheet->SetCell("C8"_pos, "=(C3+2)*2");
-    
-    sheet->PrintTexts(std::cout);
-    std::cout << std::endl;
-    sheet->PrintValues(std::cout);*/
-
-    /*auto sheet = CreateSheet();
-    sheet->SetCell("B1"_pos, "=C3");
-
-    sheet->PrintTexts(std::cout);
-    sheet->PrintValues(std::cout);*/
 
     return 0;
 }
