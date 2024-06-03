@@ -1,12 +1,26 @@
 #pragma once
 
+#include <algorithm>
+#include <cassert>
+#include <cctype>
+#include <cmath>
+#include <cstring>
+#include <forward_list>
+#include <functional>
 #include <iosfwd>
+#include <iostream>
 #include <memory>
+#include <optional>
+#include <sstream>
+#include <stack>
 #include <stdexcept>
 #include <string>
 #include <string_view>
+#include <unordered_set>
+#include <unordered_map>
 #include <variant>
 #include <vector>
+
 
 // Позиция ячейки. Индексация с нуля.
 struct Position {
@@ -39,7 +53,7 @@ public:
     enum class Category {
         Ref,    // ссылка на ячейку с некорректной позицией
         Value,  // ячейка не может быть трактована как число
-        Div0,  // в результате вычисления возникло деление на ноль
+        Arithmetic,  // в результате вычисления возникло деление на ноль
     };
 
     FormulaError(Category category);
