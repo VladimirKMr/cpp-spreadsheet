@@ -137,37 +137,27 @@ public:
     }
 
     double Evaluate(const std::function<double(Position)>& args) const override {
+        double result = 0.0;
         switch (type_) {
             case Add:
-                if (std::isfinite(lhs_->Evaluate(args) + rhs_->Evaluate(args))) {
-                    return lhs_->Evaluate(args) + rhs_->Evaluate(args);
-                } else {
-                    throw FormulaError {FormulaError::Category::Arithmetic};
-                }
+                result = lhs_->Evaluate(args) + rhs_->Evaluate(args);
+                break;
             case Subtract:
-                if (std::isfinite(lhs_->Evaluate(args) - rhs_->Evaluate(args))) {
-                    return lhs_->Evaluate(args) - rhs_->Evaluate(args);
-                } else {
-                    throw FormulaError {FormulaError::Category::Arithmetic};
-                }
+                result = lhs_->Evaluate(args) - rhs_->Evaluate(args);
+                break;
             case Multiply:
-                if (std::isfinite(lhs_->Evaluate(args) * rhs_->Evaluate(args))) {
-                    return lhs_->Evaluate(args) * rhs_->Evaluate(args);
-                } else {
-                    throw FormulaError {FormulaError::Category::Arithmetic};
-                }
+                result = lhs_->Evaluate(args) * rhs_->Evaluate(args);
+                break;
             case Divide:
-                if (std::isfinite(lhs_->Evaluate(args) / rhs_->Evaluate(args))) {
-                    return lhs_->Evaluate(args) / rhs_->Evaluate(args);
-                }
-                else if (rhs_->Evaluate(args) == 0) {
-                    throw FormulaError {FormulaError::Category::Arithmetic};
-                } else {
-                    throw FormulaError {FormulaError::Category::Arithmetic};
-                }
-            default:
-                return 0.0;
+                result = lhs_->Evaluate(args) / rhs_->Evaluate(args);
+                break;
         }
+
+        if(!std::isfinite(result)) {
+            throw FormulaError {FormulaError::Category::Arithmetic};
+        }
+
+        return result;
     }
 
 private:
@@ -205,19 +195,18 @@ public:
     }
 
     double Evaluate(const std::function<double(Position)>& args) const override {
+        double result = 0.0;
         if (type_ == UnaryMinus) {
-            if (std::isfinite(operand_->Evaluate(args) * -1)) {
-                return operand_->Evaluate(args) * -1;
-            } else {
-                throw FormulaError {FormulaError::Category::Arithmetic};
-            }
+            result = operand_->Evaluate(args) * -1;
         } else {
-            if (std::isfinite(operand_->Evaluate(args))) {
-                return operand_->Evaluate(args);
-            } else {
-                throw FormulaError {FormulaError::Category::Arithmetic};
-            }
+            result = operand_->Evaluate(args);
         }
+
+        if(!std::isfinite(result)) {
+            throw FormulaError {FormulaError::Category::Arithmetic};
+        }
+
+        return result;
     }
 
 private:
